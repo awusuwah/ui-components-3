@@ -13,8 +13,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/components/index.ts"),
       name: "UiComponentsVue3",
-      formats: ["es", "cjs"],
-      fileName: (format) => `ui-components-vue3.${format}.js`,
+      formats: ["es"],
+      fileName: "ui-components-vue3.mjs",
     },
     rollupOptions: {
       external: ["vue"],
