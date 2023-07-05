@@ -34,9 +34,13 @@
     "vite": "^4.3.9",
     "vue-tsc": "^1.4.2"
   },
-  "main": "dist/ui-components-vue3.cjs.js",
-  "module": "dist/ui-components-vue3.es.js",
+  "module": "dist/ui-components-vue3.mjs",
   "files": [
     "dist"
-  ]
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/ui-components-vue3.mjs"
+    }
+  }
 }
