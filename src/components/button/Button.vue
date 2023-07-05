@@ -1,5 +1,25 @@
 <template>
-  <button class="bg-purple-400">button text</button>
+  <button :class="[classes, rounded]" :disabled="disabled" @click="$emit('click', $event)">
+    <template v-if="!loading">
+      <slot>
+        {{ label }}
+      </slot>
+    </template>
+
+    <template v-else>
+      <div class="flex">
+        <svg :class="loadingClasses" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <span>{{ loadingText }}</span>
+      </div>
+    </template>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -13,6 +33,12 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false,
+  },
+
+  // Button will be rendered with this text. If a slot is provided, this will be ignored.
+  label: {
+    type: String,
+    default: null,
   },
 
   // Button will be rendered in it's loading state. This disables it and shows a loading spinner and some text (check `loadingText` prop).
@@ -78,13 +104,6 @@ const props = defineProps({
     },
   },
 
-  // Button will be rendered with a native HTML type.
-  type: {
-    type: String,
-    default: "button",
-    validator: (value: string) => ["button", "submit", "reset"].includes(value),
-  },
-
   // Button will be rendered with the provided color variant.
   variant: {
     type: String,
@@ -140,29 +159,29 @@ const classes = computed(() => ({
   "hover:no-underline": props.variant === "link" && !props.disabled,
 
   // Variant: `success`
-  "bg-suc-hover text-suc-contrast": props.variant === "success" && !props.outlined,
-  "hover:bg-suc active:bg-suc-active": props.variant === "success" && !props.outlined && !props.disabled,
+  "bg-suc text-suc-contrast": props.variant === "success" && !props.outlined,
+  "hover:bg-suc-hover active:bg-suc-active": props.variant === "success" && !props.outlined && !props.disabled,
 
   "bg-bgr border border-suc text-suc-hover": props.variant === "success" && props.outlined,
   "hover:bg-suc-light-hover active:bg-suc-light-active": props.variant === "success" && props.outlined && !props.disabled,
 
   // Variant: `danger`
-  "bg-dgr-hover text-dgr-contrast": props.variant === "danger" && !props.outlined,
-  "hover:bg-dgr active:bg-dgr-active": props.variant === "danger" && !props.outlined && !props.disabled,
+  "bg-err text-err-contrast": props.variant === "danger" && !props.outlined,
+  "hover:bg-err-hover active:bg-err-active": props.variant === "danger" && !props.outlined && !props.disabled,
 
-  "bg-bgr border border-dgr text-dgr-hover": props.variant === "danger" && props.outlined,
-  "hover:bg-dgr-light-hover active:bg-dgr-light-active": props.variant === "danger" && props.outlined && !props.disabled,
+  "bg-bgr border border-err text-err-hover": props.variant === "danger" && props.outlined,
+  "hover:bg-err-light-hover active:bg-err-light-active": props.variant === "danger" && props.outlined && !props.disabled,
 
   // Variant: `warning`
-  "bg-wng-hover text-wng-contrast": props.variant === "warning" && !props.outlined,
-  "hover:bg-wng active:bg-wng-active": props.variant === "warning" && !props.outlined && !props.disabled,
+  "bg-wrn text-wrn-contrast": props.variant === "warning" && !props.outlined,
+  "hover:bg-wrn-hover active:bg-wrn-active": props.variant === "warning" && !props.outlined && !props.disabled,
 
-  "bg-bgr border border-wng text-wng-hover": props.variant === "warning" && props.outlined,
-  "hover:bg-wng-light-hover active:bg-wng-light-active": props.variant === "warning" && props.outlined && !props.disabled,
+  "bg-bgr border border-wrn text-wrn-hover": props.variant === "warning" && props.outlined,
+  "hover:bg-wrn-light-hover active:bg-wrn-light-active": props.variant === "warning" && props.outlined && !props.disabled,
 
   // Variant: `info`
-  "bg-inf-hover text-inf-contrast": props.variant === "info" && !props.outlined,
-  "hover:bg-inf active:bg-inf-active": props.variant === "info" && !props.outlined && !props.disabled,
+  "bg-inf text-inf-contrast": props.variant === "info" && !props.outlined,
+  "hover:bg-inf-hover active:bg-inf-active": props.variant === "info" && !props.outlined && !props.disabled,
 
   "bg-bgr border border-inf text-inf-hover": props.variant === "info" && props.outlined,
   "hover:bg-inf-light-hover active:bg-inf-light-active": props.variant === "info" && props.outlined && !props.disabled,
@@ -183,5 +202,36 @@ const classes = computed(() => ({
 
   // Truncate
   "min-w-0": props.truncate,
+}));
+
+/**
+ * The classes for the button's loading spinner.
+ */
+const loadingClasses = computed(() => ({
+  "animate-spin -ml-1 mr-3 h-5 w-5": true,
+
+  "text-cta": props.variant === "cta" && props.outlined,
+  "text-cta-contrast": props.variant === "cta" && !props.outlined,
+
+  "text-hlt": props.variant === "highlight" && props.outlined,
+  "text-hlt-contrast": props.variant === "highlight" && !props.outlined,
+
+  "text-thm": props.variant === "theme" && props.outlined,
+  "text-thm-contrast": props.variant === "theme" && !props.outlined,
+
+  "text-txt-200": props.variant === "neutral" && props.outlined,
+  "text-txt-400": props.variant === "neutral" && !props.outlined,
+
+  "text-suc": props.variant === "success" && props.outlined,
+  "text-suc-contrast": props.variant === "success" && !props.outlined,
+
+  "text-err": props.variant === "danger" && props.outlined,
+  "text-err-contrast": props.variant === "danger" && !props.outlined,
+
+  "text-wrn": props.variant === "warning" && props.outlined,
+  "text-wrn-contrast": props.variant === "warning" && !props.outlined,
+
+  "text-inf": props.variant === "info" && props.outlined,
+  "text-inf-contrast": props.variant === "info" && !props.outlined,
 }));
 </script>
