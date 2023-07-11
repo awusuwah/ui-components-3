@@ -128,7 +128,7 @@ export const EndIcon: Story = {
       };
     },
     template: `
-      <TextInput :label="label" :disabled="disabled">
+      <TextInput :label="label" :placeholder="placeholder" :disabled="disabled">
         <template #end>
           <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -141,5 +141,6 @@ export const EndIcon: Story = {
   }),
   args: {
     label: "Email Address",
+    placeholder: "max.muster@hotelplan.com",
   },
 };
