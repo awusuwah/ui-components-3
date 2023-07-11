@@ -18,6 +18,7 @@ export default meta;
 export const Normal: Story = {
   args: {
     label: "Firstname",
+    placeholder: "Joe",
   },
 };
 
@@ -35,6 +36,20 @@ export const Loading: Story = {
   },
 };
 
+export const Valid: Story = {
+  args: {
+    label: "Accommodation Code",
+    valid: true,
+  },
+};
+
+export const Invalid: Story = {
+  args: {
+    label: "Accommodation Code",
+    invalid: true,
+  },
+};
+
 export const StartIcon: Story = {
   render: (args) => ({
     components: { TextInput },
@@ -44,14 +59,38 @@ export const StartIcon: Story = {
       };
     },
     template: `
-      <TextInput label="Email Address">
+      <TextInput :label="label" :disabled="disabled">
         <template #start>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-            <path fill-rule="evenodd"
-              d="M10 0a10 10 0 100 20 10 10 0 000-20zM1 10a9 9 0 1118 0 9 9 0 01-18 0z"
-              clip-rule="evenodd" />
-          </svg>
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+          </div>
+        </template>
+      </TextInput>
+    `,
+  }),
+  args: {
+    label: "Email Address",
+  },
+};
+
+export const EndIcon: Story = {
+  render: (args) => ({
+    components: { TextInput },
+    setup() {
+      return {
+        ...args,
+      };
+    },
+    template: `
+      <TextInput :label="label" :disabled="disabled">
+        <template #end>
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+          </div>
         </template>
       </TextInput>
     `,
