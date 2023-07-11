@@ -22,6 +22,14 @@ export const Normal: Story = {
   },
 };
 
+export const NormalCompact: Story = {
+  args: {
+    label: "Firstname",
+    placeholder: "Joe",
+    compact: true,
+  },
+};
+
 export const Disabled: Story = {
   args: {
     label: "Name",
@@ -29,10 +37,29 @@ export const Disabled: Story = {
   },
 };
 
+export const DisabledCompact: Story = {
+  args: {
+    label: "Accommodation Code",
+    placeholder: "####.###.##",
+    compact: true,
+    disabled: true,
+  },
+};
+
 export const Loading: Story = {
   args: {
-    label: "Firstname",
+    label: "Username",
     loading: true,
+    loadingText: "Loading Users...",
+  },
+};
+
+export const LoadingCompact: Story = {
+  args: {
+    label: "Username",
+    loading: true,
+    loadingText: "Loading users...",
+    compact: true,
   },
 };
 
@@ -43,10 +70,26 @@ export const Valid: Story = {
   },
 };
 
+export const ValidCompact: Story = {
+  args: {
+    label: "Accommodation Code",
+    valid: true,
+    compact: true,
+  },
+};
+
 export const Invalid: Story = {
   args: {
     label: "Accommodation Code",
     invalid: true,
+  },
+};
+
+export const InvalidCompact: Story = {
+  args: {
+    label: "Accommodation Code",
+    invalid: true,
+    compact: true,
   },
 };
 
@@ -59,7 +102,7 @@ export const StartIcon: Story = {
       };
     },
     template: `
-      <TextInput :label="label" :disabled="disabled">
+      <TextInput :label="label" :placeholder="placeholder" :disabled="disabled">
         <template #start>
           <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -72,6 +115,7 @@ export const StartIcon: Story = {
   }),
   args: {
     label: "Email Address",
+    placeholder: "max.muster@hotelplan.com",
   },
 };
 
